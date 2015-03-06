@@ -38,6 +38,6 @@ app.use(session({
 // Routing Table
 
 //GET
-app.get('/', base.index);
+//app.get('/', base.index);
 
 app.listen(PORT);
