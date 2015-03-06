@@ -27,6 +27,3 @@ node_modules
 # Users Environment Variables
 .lock-wscript
 secrets.js
-
-# Ignore vim swamp files
-*.swp
