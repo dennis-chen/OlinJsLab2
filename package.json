@@ -20,6 +20,7 @@
     "mongoose": "^3.8.24",
     "morgan": "^1.5.1",
     "react": "^0.12.2",
-    "react-tools": "^0.12.2"
+    "react-tools": "^0.12.2",
+    "synchronize": "^0.9.10"
   }
 }
