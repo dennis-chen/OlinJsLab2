@@ -1,4 +1,4 @@
-function find_or_create_room (req, res, modifyPlaylist) {
+function find_or_create_room (req, res) {
 	
 	var chosenPlaylist;
 	Playlist.find({name: req.body.roomId})
@@ -18,8 +18,6 @@ function find_or_create_room (req, res, modifyPlaylist) {
 			var upsertData = chosenPlaylist.toObject();
 			delete upsertData._id;
 
-
-			modifyPlaylist(chosenPlaylist);
 			Playlist.update(
 				{_id: chosenPlaylist.id}, 
 				upsertData, 
@@ -30,16 +28,20 @@ function find_or_create_room (req, res, modifyPlaylist) {
 					res.status(200).json({status: "success"});
 				});
 	});
-
 }
 
 exports.add_song = function(req, res) {
-	find_or_create_room(req, res, function(chosenPlaylist) {
-		var newSong = new Song(req.body.song);
-		console.log("Chosen playlist: " + chosenPlaylist);
-	});
+	// find_or_create_room(req, res, function (chosenPlaylist, nextAction) {
+
+	// 	var newSong = new Song(req.body.song);
+	// 	chosenPlaylist.songs.push(newSong);
+	// 	console.log("Chosen playlist: " + chosenPlaylist);
+	// 	nextAction(chosenPlaylist, upsertData);
+	// });
+
+	find_or_create_room(req, res);
 };
 
 exports.find_or_create_room = function(req, res) {
-	find_or_create_room(req, res, function (){});
+	find_or_create_room(req, res);
 };
