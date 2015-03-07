@@ -11,23 +11,36 @@ var Room = React.createClass({
 
   },
   getInitialState: function(){
-
-    // ADD Create playlist.
     return {queue : []};
   },
+  componentWillMount: function(){
+    this.props.roomId = this.getParams()["roomId"];
+    
+    // Find or create a new room.
+    var url = "/find_or_create_room";
+    var data = this.props.roomId;
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: data,
+    })
+    .done(function(){
+      // FIXME Change state.
+      console.log("Success!");
+    })
+    .fail(function(){
+      // FIXME Change state.
+      console.log("Failure!");
+    });
+  },
   componentDidMount: function(){
-
   },
   componentWillReceiveProps: function () {
   },
   render: function() {
     return (
       <div>
-        <h1>Something is {this.getParams()["roomId"]}</h1>
-        {/*
-          <SongQueue queue={this.state.queue} roomId={this.getParams().messageId}/>
-          <Search addSongToQueue={this.addSongToQueue} roomId={this.getParams().roomId}/>
-        */}
+        <h1>This room is currently {this.props.roomId}</h1>
         <SongQueue queue={this.state.queue}/>
         <Search addSongToQueue={this.addSongToQueue}/>    
       </div>

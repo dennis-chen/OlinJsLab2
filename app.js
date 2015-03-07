@@ -44,5 +44,7 @@ app.use(session({
 // GET.
 
 // POST.
+app.post('/find_or_create_room', base.find_or_create_room);
 app.post('/add_song', base.add_song);
+
 app.listen(PORT);

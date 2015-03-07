@@ -4,3 +4,7 @@ exports.index = function(req, res) {
 
 exports.add_song = function(req, res) {
 };
+
+exports.find_or_create_room = function(req, res) {
+	
+};
