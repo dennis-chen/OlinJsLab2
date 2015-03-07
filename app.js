@@ -41,6 +41,5 @@ app.use(session({
 //app.get('/', base.index);
 
 //POST
-app.post('/add_song', base.add_song)
-
+app.post('/add_song', base.add_song);
 app.listen(PORT);

@@ -6,6 +6,8 @@ var Room = React.createClass({
         var new_state = this.state;
         new_state.queue.push(song);
         this.setState(new_state);
+
+        // ADD to database?
     },
     getInitialState: function(){
         return {queue : []};
