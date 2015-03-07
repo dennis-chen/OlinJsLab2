@@ -59,7 +59,6 @@ var Search = React.createClass({
         return {search_results : []};
     },
     render: function() {
-        console.log(this.props);
         return (
             <div>
                 <input className="search_bar" onChange={this.handleChange} type="text" ref="SearchBar"></input>
