@@ -17,12 +17,13 @@ var Room = React.createClass({
     this.props.roomId = this.getParams()["roomId"];
     
     // Find or create a new room.
-    var url = "/find_or_create_room";
-    var data = this.props.roomId;
+    console.log(this.props.roomId);
     $.ajax({
       type: "POST",
-      url: url,
-      data: data,
+      url: "/find_or_create_room",
+      data: {
+        roomId: this.props.roomId,
+      },
     })
     .done(function(){
       // FIXME Change state.
