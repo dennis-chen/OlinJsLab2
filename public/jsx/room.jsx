@@ -3,21 +3,35 @@ var Router = ReactRouter;
 var Room = React.createClass({
   mixins: [Router.State],
   addSongToQueue: function(song){
+    var _root = this;
     var new_state = this.state;
     new_state.queue.push(song);
-    this.setState(new_state);
 
-    // ADD to database?
-
+    // Find or create a new room.
+    $.ajax({
+      type: "POST",
+      url: "/add_song",
+      data: {
+        playlist: this.props.roomId,
+        song: song,
+      },
+    })
+    .done(function(){
+      _root.setState(new_state);
+    })
+    .fail(function(){
+      // FIXME Change state.
+      console.log("Failure!");
+    });
   },
   getInitialState: function(){
+    // ADD GET existing songs.
     return {queue : []};
   },
   componentWillMount: function(){
     this.props.roomId = this.getParams()["roomId"];
     
     // Find or create a new room.
-    console.log(this.props.roomId);
     $.ajax({
       type: "POST",
       url: "/find_or_create_room",
