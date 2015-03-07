@@ -1,4 +1,4 @@
-// Utility Imports
+// Utility Imports.
 var express = require('express');
 var session = require('express-session');
 var mongoose = require('mongoose');
@@ -8,18 +8,22 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 React = require('react');
 
-// Route Imports
+// Route Imports.
 var base = require('./routes/base');
 
-// Environment Variables
+// Environment Variables.
 var mongoURI = process.env.MONGOURI || "mongodb://localhost/test";
 var PORT = process.env.PORT || 3000;
 mongoose.connect(mongoURI);
 
-// Config
+// Model imports.
+var Song = require('./models/song').Song;
+var Playlist = require('./models/song').Playlist;
+
+// Config.
 var app = express();
 
-// Middleware
+// Middleware.
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
@@ -35,11 +39,10 @@ app.use(session({
     saveUninitialized: true
 }));
 
-//API Routing Table
+// API Routing Table.
 
-//GET
-//app.get('/', base.index);
+// GET.
 
-//POST
+// POST.
 app.post('/add_song', base.add_song);
 app.listen(PORT);

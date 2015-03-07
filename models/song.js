@@ -13,4 +13,4 @@ var PlaylistSchema = mongoose.Schema({
 });
 
 module.exports.Song = mongoose.model("Song", SongSchema);
-module.exports.Playlist = mongoose.model("Playlist", PlayListSchema);
+module.exports.Playlist = mongoose.model("Playlist", PlaylistSchema);
