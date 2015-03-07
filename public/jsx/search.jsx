@@ -1,14 +1,26 @@
+var SearchResult = React.createClass({
+    handleClick: function() {
+        console.log('clicked a search result');
+        this.props.addSongToQueue(this.props.track);
+    },
+    render: function() {
+        var album_image_url = this.props.track.album.images[1].url ;
+        return (
+            <div className="search_this.props.track" onClick={this.handleClick} >
+                <div className="trackName">{this.props.track.name}</div>
+                <div className="artistName">{this.props.track.artists[0].name}</div>
+                <div><img className="albumCover" src={album_image_url}></img></div>
+            </div>
+        );
+    }
+});
+
 var SearchResults = React.createClass({
     render: function() {
-        console.log(this.props.searchResults);
+        var this_component = this;
         var results = this.props.searchResults.map( function (result) {
-            var album_image_url = result.album.images[1].url ;
             return (
-                <div className="search_result">
-                    <div className="trackName">{result.name}</div>
-                    <div className="artistName">{result.artists[0].name}</div>
-                    <div><img className="albumCover" src={album_image_url}></img></div>
-                </div>
+                <SearchResult track={result} addSongToQueue={this_component.props.addSongToQueue} />
             );
         });
         return (
@@ -21,9 +33,12 @@ var SearchResults = React.createClass({
 
 var Search = React.createClass({
     handleChange: function(){
-        console.log('lol');
-        console.log(this.refs.SearchBar.getDOMNode().value.trim());
-        this.searchTracks(this.refs.SearchBar.getDOMNode().value.trim());
+        var query = this.refs.SearchBar.getDOMNode().value.trim()
+        if (query) {
+            this.searchTracks(query);
+        } else {
+            this.setState({search_results: []});
+        }
     },
     searchTracks: function(query) {
         var this_component = this;
@@ -43,15 +58,12 @@ var Search = React.createClass({
     getInitialState: function(){
         return {search_results : []};
     },
-    componentDidMount: function(){
-
-    },
     render: function() {
-                //<SearchBar onChange={this.handleChange} ref="SearchBar" />
+        console.log(this.props);
         return (
             <div>
                 <input className="search_bar" onChange={this.handleChange} type="text" ref="SearchBar"></input>
-                <SearchResults searchResults={this.state.search_results} ref="searchResults"/>
+                <SearchResults addSongToQueue={this.props.addSongToQueue} searchResults={this.state.search_results} ref="searchResults"/>
             </div>
         );
     }

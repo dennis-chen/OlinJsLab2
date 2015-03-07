@@ -35,9 +35,12 @@ app.use(session({
     saveUninitialized: true
 }));
 
-// Routing Table
+//API Routing Table
 
 //GET
 //app.get('/', base.index);
+
+//POST
+app.post('/add_song', base.add_song)
 
 app.listen(PORT);
