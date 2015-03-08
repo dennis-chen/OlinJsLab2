@@ -2,7 +2,7 @@ var SongQueue = React.createClass({
     changeSongIndex: function(change_index){
         //check if the new index is in bounds before changing
         var new_index = this.state.song_index + change_index;
-        if (!(typeof this.state.queue[new_index] == 'undefined')){
+        if (!(typeof this.props.queue[new_index] == 'undefined')){
             this.setState({song_index:new_index});
         }
     },

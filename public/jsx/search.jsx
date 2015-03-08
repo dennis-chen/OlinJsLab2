@@ -3,7 +3,6 @@ var SearchResult = React.createClass({
         this.props.addSongToQueue(this.props.track);
     },
     render: function() {
-        console.log(this.props.track);
         var thumbnail_url = 'http://img.youtube.com/vi/'+ this.props.track.id +'/mqdefault.jpg'
         return (
             <div className="search_result" onClick={this.handleClick} >
@@ -41,7 +40,6 @@ var Search = React.createClass({
     },
     searchYoutube: function(query){
         var this_component = this;
-        console.log('searching youtube');
         var query = encodeURIComponent(query);
         var youtube_url='http://gdata.youtube.com/feeds/api/videos?q='+query+'&format=5&max-results=20&v=2&alt=jsonc'; 
         $.ajax({
@@ -51,7 +49,6 @@ var Search = React.createClass({
         success: function(response)
         {
             if(response.data.items){
-                console.log(response.data.items);
                 var music_responses = response.data.items.filter(function(response){
                     return response.category === 'Music';
                 });
@@ -72,7 +69,6 @@ var Search = React.createClass({
         return {search_results : [], message:''};
     },
     render: function() {
-        console.log(this.props);
         return (
             <div>
                 <input className="search_bar" onChange={this.handleChange} type="text" ref="SearchBar"></input>
