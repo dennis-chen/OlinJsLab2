@@ -12,8 +12,8 @@ var Room = React.createClass({
       type: "POST",
       url: "/add_song",
       data: {
-        playlist: this.props.roomId,
-        song: song,
+        roomId: this.props.roomId,
+        song: JSON.stringify(song),
       },
     })
     .done(function(){

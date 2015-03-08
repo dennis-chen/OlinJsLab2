@@ -1,8 +1,3 @@
-var sync = require('synchronize');
-var fiber = sync.fiber;
-var await = sync.await;
-var defer = sync.defer;
-
 function find_or_create_room (req, res, modifyPlaylist) {
 	
 	var chosenPlaylist;
@@ -23,41 +18,39 @@ function find_or_create_room (req, res, modifyPlaylist) {
 			var upsertData = chosenPlaylist.toObject();
 			delete upsertData._id;
 
-			try {
-		    fiber(function() {
-		    		if (modifyPlaylist != null) {
-		        	upsertData = await(modifyPlaylist(upsertData, defer()));
-		    		}
-		    		result = await(
-		    			Playlist.update(
-		    				{_id: chosenPlaylist.id}, 
-		    				upsertData, 
-		    				{upsert: true}, 
-		    				function (err, result){
-		    					if (err) throw err;
+			var playlistUpdate = function (newChosenPlaylist, newUpsertData){
+				newChosenPlaylistId = newChosenPlaylist._id;
 
-		    					res.status(200).json({status: "success"});
-		    				}), defer()
-		    		);
-		    });
-			} catch(err) {throw err};
+				Playlist.update(
+					{_id: newChosenPlaylistId}, 
+					newUpsertData, 
+					{upsert: true}, 
+					function (err, result){
+						if (err) throw err;
+						res.status(200).json({status: "success"});
+				});
+			}
+
+  		if (modifyPlaylist != null) {
+      	modifyPlaylist(chosenPlaylist, upsertData, playlistUpdate);
+  		} else {
+  			playlistUpdate(chosenPlaylist, upsertData);
+  		}
 	});
 }
 
 exports.add_song = function(req, res) {
-	// find_or_create_room(req, res, function (chosenPlaylist, nextAction) {
 
-	// 	var newSong = new Song(req.body.song);
-	// 	chosenPlaylist.songs.push(newSong);
-	// 	console.log("Chosen playlist: " + chosenPlaylist);
-	// 	nextAction(chosenPlaylist, upsertData);
-	// });
-
-	find_or_create_room(req, res, function (upsertData){
-		var newSong = new Song(req.body.song);
-		upsertData.songs.push(newSong);
+	find_or_create_room(req, res, function (chosenPlaylist, upsertData, playlistUpdate){
+		var parsedSong = JSON.parse(req.body.song);
+		console.log(parsedSong);
+		var newSong = new Song(parsedSong);
+		var newUpsertData = upsertData;
+		newUpsertData.songs.push(newSong.toObject());
 		console.log(upsertData);
+		playlistUpdate(chosenPlaylist, newUpsertData);
 	});
+
 };
 
 exports.find_or_create_room = function(req, res) {
