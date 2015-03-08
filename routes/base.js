@@ -43,14 +43,13 @@ exports.add_song = function(req, res) {
 
 	find_or_create_room(req, res, function (chosenPlaylist, upsertData, playlistUpdate){
 		var parsedSong = JSON.parse(req.body.song);
-		console.log(parsedSong);
-		var newSong = new Song(parsedSong);
+
+		// FIXME Remove unecessary information from ParsedSong so that database doesn't blow up.
+
 		var newUpsertData = upsertData;
-		newUpsertData.songs.push(newSong.toObject());
-		console.log(upsertData);
+		newUpsertData.songs.push(parsedSong);
 		playlistUpdate(chosenPlaylist, newUpsertData);
 	});
-
 };
 
 exports.find_or_create_room = function(req, res) {

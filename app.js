@@ -17,7 +17,6 @@ var PORT = process.env.PORT || 3000;
 mongoose.connect(mongoURI);
 
 // Model imports.
-Song = require('./models/song').Song;
 Playlist = require('./models/song').Playlist;
 
 // Config.
