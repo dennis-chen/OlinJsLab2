@@ -11,4 +11,4 @@ var PlaylistSchema = mongoose.Schema({
 	songs: []
 });
 
-module.exports.Playlist = mongoose.model("Playlist", PlaylistSchema);
+module.exports = mongoose.model("Playlist", PlaylistSchema);

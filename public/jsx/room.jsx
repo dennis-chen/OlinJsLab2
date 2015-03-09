@@ -4,8 +4,8 @@ var Room = React.createClass({
   mixins: [Router.State],
   addSongToQueue: function(song){
     var _root = this;
-    var new_state = this.state;
-    new_state.queue.push(song);
+    var roomState = this.state;
+    roomState.queue.push(song);
 
     // Find or create a new room.
     $.ajax({
@@ -17,7 +17,7 @@ var Room = React.createClass({
       },
     })
     .done(function(){
-      _root.setState(new_state);
+      _root.setState(roomState);
     })
     .fail(function(){
       // FIXME Change state.
@@ -25,12 +25,15 @@ var Room = React.createClass({
     });
   },
   getInitialState: function(){
-    // ADD GET existing songs.
     return {queue : []};
   },
   componentWillMount: function(){
     this.props.roomId = this.getParams()["roomId"];
-    
+  },
+  componentDidMount: function(){
+    var _root = this;
+    var roomState = this.state;
+
     // Find or create a new room.
     $.ajax({
       type: "POST",
@@ -39,16 +42,14 @@ var Room = React.createClass({
         roomId: this.props.roomId,
       },
     })
-    .done(function(){
-      // FIXME Change state.
-      console.log("Success!");
+    .done(function(songs){
+      roomState.queue = songs["songs"]; // songs contains a list of songs.
+      _root.setState(roomState);
     })
     .fail(function(){
       // FIXME Change state.
       console.log("Failure!");
     });
-  },
-  componentDidMount: function(){
   },
   componentWillReceiveProps: function () {
   },

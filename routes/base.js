@@ -27,7 +27,12 @@ function find_or_create_room (req, res, modifyPlaylist) {
 					{upsert: true}, 
 					function (err, result){
 						if (err) throw err;
-						res.status(200).json({status: "success"});
+
+						// FIXME Make this less bulky by sending back much less information.
+						// Return all songs in the playlist.
+						res.status(200).json({
+							songs: newUpsertData.songs
+						});
 				});
 			}
 

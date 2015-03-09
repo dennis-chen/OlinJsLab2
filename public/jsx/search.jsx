@@ -1,6 +1,8 @@
 var SearchResult = React.createClass({
     handleClick: function() {
-        console.log('clicked a search result');
+        console.log('Clicked a search result.');
+        console.log(this.props.track);
+        console.log(this.props.addSongToQueue.toString());
         this.props.addSongToQueue(this.props.track);
     },
     render: function() {
@@ -17,10 +19,10 @@ var SearchResult = React.createClass({
 
 var SearchResults = React.createClass({
     render: function() {
-        var this_component = this;
+        var searchResultsComponent = this;
         var results = this.props.searchResults.map( function (result) {
             return (
-                <SearchResult track={result} addSongToQueue={this_component.props.addSongToQueue} />
+                <SearchResult track={result} addSongToQueue={searchResultsComponent.props.addSongToQueue} />
             );
         });
         return (
@@ -41,7 +43,7 @@ var Search = React.createClass({
         }
     },
     searchTracks: function(query) {
-        var this_component = this;
+        var searchComponent = this;
         $.ajax({
             url: 'https://api.spotify.com/v1/search',
             data: {
@@ -50,8 +52,7 @@ var Search = React.createClass({
             },
             success: function (response) {
                 var search_results = response.tracks.items;
-                console.log(search_results);
-                this_component.setState({search_results: search_results});
+                searchComponent.setState({search_results: search_results});
             }
         });
     },
