@@ -1,7 +1,5 @@
-/**
-* Mongo Model for a Song.
-* Keeps track of what songs have been added.
-*/
+// Mongo Model for a Song.
+// Keeps track of what songs have been added.
 
 var mongoose = require('mongoose');
 
