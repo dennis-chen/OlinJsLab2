@@ -1,17 +1,13 @@
 var SearchResult = React.createClass({
     handleClick: function() {
-        console.log('Clicked a search result.');
-        console.log(this.props.track);
-        console.log(this.props.addSongToQueue.toString());
         this.props.addSongToQueue(this.props.track);
     },
     render: function() {
-        var album_image_url = this.props.track.album.images[1].url ;
+        var thumbnail_url = 'http://img.youtube.com/vi/'+ this.props.track.id +'/mqdefault.jpg'
         return (
-            <div className="search_this.props.track" onClick={this.handleClick} >
-                <div className="trackName">{this.props.track.name}</div>
-                <div className="artistName">{this.props.track.artists[0].name}</div>
-                <div><img className="albumCover" src={album_image_url}></img></div>
+            <div className="search_result" onClick={this.handleClick} >
+                <div className="trackName">{this.props.track.title}</div>
+                <div><img className="videoThumbnail" src={thumbnail_url}></img></div>
             </div>
         );
     }
@@ -37,32 +33,46 @@ var Search = React.createClass({
     handleChange: function(){
         var query = this.refs.SearchBar.getDOMNode().value.trim()
         if (query) {
-            this.searchTracks(query);
+            this.searchYoutube(query);
         } else {
             this.setState({search_results: []});
         }
     },
-    searchTracks: function(query) {
+    searchYoutube: function(query){
         var searchComponent = this;
+        var query = encodeURIComponent(query);
+        var youtube_url='http://gdata.youtube.com/feeds/api/videos?q='+query+'&format=5&max-results=20&v=2&alt=jsonc'; 
         $.ajax({
-            url: 'https://api.spotify.com/v1/search',
-            data: {
-                q: query,
-                type: 'track'
-            },
-            success: function (response) {
-                var search_results = response.tracks.items;
-                searchComponent.setState({search_results: search_results});
+        type: "GET",
+        url: youtube_url,
+        dataType:"jsonp",
+        success: function(response)
+        {
+            if(response.data.items){
+                var music_responses = response.data.items.filter(function(response){
+                    return response.category === 'Music';
+                });
+                if(music_responses.length > 0){
+                    searchComponent.setState({search_results: music_responses, message:''});
+                } else {
+                    searchComponent.setState({search_results: [], message:'No music found!'});
+                }
+            } else {
+                searchComponent.setState({search_results: [], message:'No music found!'});
             }
-        });
+        },
+        error: function(){
+            this_component.setState({search_results: [], message:'Error searching youtube!'});
+        }});
     },
     getInitialState: function(){
-        return {search_results : []};
+        return {search_results : [], message:''};
     },
     render: function() {
         return (
             <div>
                 <input className="search_bar" onChange={this.handleChange} type="text" ref="SearchBar"></input>
+                <div className="message">{this.state.message}</div>
                 <SearchResults addSongToQueue={this.props.addSongToQueue} searchResults={this.state.search_results} ref="searchResults"/>
             </div>
         );
