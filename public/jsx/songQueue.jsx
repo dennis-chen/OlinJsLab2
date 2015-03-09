@@ -1,29 +1,53 @@
+var Router = ReactRouter;
+
 var SongQueue = React.createClass({
-    changeSongIndex: function(change_index){
-        //check if the new index is in bounds before changing
-        var new_index = this.state.song_index + change_index;
-        if (!(typeof this.props.queue[new_index] == 'undefined')){
-            this.setState({song_index:new_index});
-        }
-    },
-    getInitialState: function(){
-        return {song_index:0};
-    },
-    render: function() {
-        var song_titles = this.props.queue.map(function(track) {
-            return <div>{track.title}</div>;
-        });
-        if (this.props.queue.length > 0) {
-            song_titles[this.state.song_index] = <div className="songPlaying"> 
-                <b>{song_titles[this.state.song_index]}</b>
-            </div>;
-            var song = this.props.queue[this.state.song_index];
-        } 
-        return (
-            <div className="SongQueue">
-                <SongPlayer changeSongIndex={this.changeSongIndex} song={song}/>
-                {song_titles}
-            </div>
-        );
+  mixins: [Router.State],
+  changeSongIndex: function(change_index){
+    var songQueueState = this.state;
+    var new_index = this.state.song_index + change_index;
+    var currentProps = this.props;
+
+    // Check if the new index is in bounds before changing.
+    if (!(typeof this.props.queue[new_index] == 'undefined')){
+      songQueueState.song_index = new_index;
+      this.setState(songQueueState);
+      this.componentWillReceiveProps(currentProps);
     }
+  },
+  getInitialState: function (){
+    return {
+      song_titles: [], 
+      song_index:0
+    };
+  },
+  componentWillReceiveProps: function (nextProps){
+    var songList = nextProps.queue;
+    var songQueueState = this.state;
+
+    songList.forEach(function (song, index, array){
+      songQueueState.song_titles.push(song.name);
+    });
+
+    songQueueState.song_titles = songList.map(function(track) {
+      return <div>{track.title}</div>
+    });
+
+    if (songList.length > 0) {
+      var songQueueState = this.state;
+      songQueueState.song_titles[this.state.song_index] = <div className="songPlaying"> 
+          <b>{this.state.song_titles[this.state.song_index]}</b>
+      </div>;
+      songQueueState.song = this.props.queue[this.state.song_index];
+    }
+
+    this.setState(songQueueState);
+  },
+  render: function() {
+    return (
+      <div className="SongQueue">
+          <SongPlayer changeSongIndex={this.changeSongIndex} song={this.state.song}/>
+          {this.state.song_titles}
+      </div>
+    );
+  }
 });

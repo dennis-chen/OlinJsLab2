@@ -15,10 +15,10 @@ var SearchResult = React.createClass({
 
 var SearchResults = React.createClass({
     render: function() {
-        var this_component = this;
+        var searchResultsComponent = this;
         var results = this.props.searchResults.map( function (result) {
             return (
-                <SearchResult track={result} addSongToQueue={this_component.props.addSongToQueue} />
+                <SearchResult track={result} addSongToQueue={searchResultsComponent.props.addSongToQueue} />
             );
         });
         return (
@@ -39,7 +39,7 @@ var Search = React.createClass({
         }
     },
     searchYoutube: function(query){
-        var this_component = this;
+        var searchComponent = this;
         var query = encodeURIComponent(query);
         var youtube_url='http://gdata.youtube.com/feeds/api/videos?q='+query+'&format=5&max-results=20&v=2&alt=jsonc'; 
         $.ajax({
@@ -53,12 +53,12 @@ var Search = React.createClass({
                     return response.category === 'Music';
                 });
                 if(music_responses.length > 0){
-                    this_component.setState({search_results: music_responses, message:''});
+                    searchComponent.setState({search_results: music_responses, message:''});
                 } else {
-                    this_component.setState({search_results: [], message:'No music found!'});
+                    searchComponent.setState({search_results: [], message:'No music found!'});
                 }
             } else {
-                this_component.setState({search_results: [], message:'No music found!'});
+                searchComponent.setState({search_results: [], message:'No music found!'});
             }
         },
         error: function(){

@@ -31,7 +31,7 @@ var Test = React.createClass({
 var routes = (
   <Route name="app" path="/" handler={App}>
     <Route name="test" handler={Test}/>
-    <Route name="room" path=":roomId" handler={Room}/>
+    <Route name="room" path="room/:roomId" handler={Room}/>
     <NotFoundRoute handler={Room}/>
     <DefaultRoute handler={Room}/>
   </Route>

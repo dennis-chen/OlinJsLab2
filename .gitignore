@@ -30,3 +30,6 @@ secrets.js
 
 # Ignore vim swamp files
 *.swp
+
+# Notes
+notes.todo
