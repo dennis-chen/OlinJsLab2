@@ -8,6 +8,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 React = require('react');
 
+// Socket.io
+// var io = require('socket.io').listen(express);
+
 // Route Imports.
 var base = require('./routes/base');
 
