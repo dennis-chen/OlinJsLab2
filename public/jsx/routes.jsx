@@ -1,28 +1,19 @@
-var Router = ReactRouter;
+// Contains the app and all of my routes for rooms.
 
+// Set up routing references for later. 
+var Router = ReactRouter;
 var DefaultRoute = Router.DefaultRoute;
 var Link = Router.Link;
 var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 var NotFoundRoute = Router.NotFoundRoute;
 
+// Load the RouteHandler.
 var App = React.createClass({
   render: function () {
     return (
       <div>
         <RouteHandler/>
-      </div>
-    );
-  }
-});
-
-// Test route to prove that routing works.
-// FIXME Remove this for production.
-var Test = React.createClass({
-  render: function () {
-    return (
-      <div>
-      	Hello world!
       </div>
     );
   }
@@ -37,6 +28,7 @@ var routes = (
   </Route>
 );
 
+// Run routes afer definition.
 Router.run(routes, function (Handler) {
   React.render(<Handler/>, document.getElementById('container'));
 });
