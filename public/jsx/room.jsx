@@ -37,6 +37,7 @@ var Room = React.createClass({
     var roomId = this.getParams()["roomId"];
     var this_component = this;
     var roomState = {};
+
     $.ajax({
       type: "POST",
       url: "/find_or_create_room",
