@@ -8,17 +8,15 @@ var Room = React.createClass({
   mixins: [Router.State],
 
   addSongToQueue: function(song){
-
     // Temporarily stores the object so that it can be referenced later in a post request.
     var _root = this;
     var roomState = this.state;
-
     // Find or create a new room.
     $.ajax({
       type: "POST",
       url: "/add_song",
       data: {
-        roomId: this.props.roomId,
+        roomId: this.state.roomId,
         song: JSON.stringify(song),
       },
     })
@@ -34,39 +32,53 @@ var Room = React.createClass({
       console.log("Failure!");
     });
   },
-  getInitialState: function(){
-    return {queue : []};
-  },
-  componentWillMount: function(){
-    this.props.roomId = this.getParams()["roomId"];
-  },
-  componentDidMount: function(){
-
-    // FIXME This could probably be repackaged in a smarter way.
-    var _root = this;
-    var roomState = this.state;
-
-    // Find or create a new room.
+  loadQueueFromMongo: function(){
+      console.log('loadQueueFromMongo');
+    var roomId = this.getParams()["roomId"];
+    var this_component = this;
+    var roomState = {};
     $.ajax({
       type: "POST",
       url: "/find_or_create_room",
       data: {
-        roomId: this.props.roomId,
+        roomId: roomId,
       },
     })
     .done(function(songs){
       roomState.queue = songs["songs"]; // songs contains a list of songs.
-      _root.setState(roomState);
+      this_component.setState(roomState);
     })
     .fail(function(){
-      // FIXME Change state.
-      console.log("Failure!");
+      roomState.queue = [];
+      roomState.message = 'Could not find room!';
+      this_component.setState(roomState);
     });
   },
+  loadRoomId: function(){
+      var roomId = this.getParams()["roomId"];
+      var roomState = this.state;
+      roomState.roomId = roomId;
+      this.setState(roomState);
+  },
+  getInitialState: function(){
+      console.log('getinitialstate');
+    var roomId = this.getParams()["roomId"];
+    return {queue : [], roomId:roomId};
+  },
+  componentWillReceiveProps: function(){
+      console.log('will recieve props');
+      this.loadQueueFromMongo();
+      this.loadRoomId();
+  },
+  componentDidMount: function(){
+      console.log('componentdidmount');
+      this.loadQueueFromMongo();
+  },
   render: function() {
+    console.log(this.state.roomId);
     return (
       <div>
-        <h1>This room is currently {this.props.roomId}</h1>
+        <h1>This room is currently {this.state.roomId}</h1>
         <SongQueue queue={this.state.queue}/>
         <Search addSongToQueue={this.addSongToQueue}/>    
       </div>
