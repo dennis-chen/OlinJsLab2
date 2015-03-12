@@ -3,11 +3,13 @@
 
 var Router = ReactRouter;
 
+var socket = io.connect('http://localhost');
+
 var Room = React.createClass({
   // FIXME Figure out why this is important - because without it my code breaks.
   mixins: [Router.State],
 
-  addSongToQueue: function(song){
+  addSongToQueue: function(song, hasChangeHappened){
     // Temporarily stores the object so that it can be referenced later in a post request.
     var _root = this;
     var roomState = this.state;
@@ -18,6 +20,7 @@ var Room = React.createClass({
       data: {
         roomId: this.state.roomId,
         song: JSON.stringify(song),
+        hasChangeHappened: hasChangeHappened
       },
     })
     .done(function(){
@@ -32,8 +35,9 @@ var Room = React.createClass({
       console.log("Failure!");
     });
   },
-  loadQueueFromMongo: function(){
-      console.log('loadQueueFromMongo');
+
+  loadQueueFromMongo: function(hasChangeHappened){
+    console.log('loadQueueFromMongo');
     var roomId = this.getParams()["roomId"];
     var this_component = this;
     var roomState = {};
@@ -43,6 +47,7 @@ var Room = React.createClass({
       url: "/find_or_create_room",
       data: {
         roomId: roomId,
+        hasChangeHappened: hasChangeHappened
       },
     })
     .done(function(songs){
@@ -55,6 +60,7 @@ var Room = React.createClass({
       this_component.setState(roomState);
     });
   },
+
   loadRoomId: function(){
       var roomId = this.getParams()["roomId"];
       var roomState = this.state;
@@ -62,18 +68,32 @@ var Room = React.createClass({
       this.setState(roomState);
   },
   getInitialState: function(){
-      console.log('getinitialstate');
+    console.log('getinitialstate');
+
+    var _root = this;
     var roomId = this.getParams()["roomId"];
+
+    socket.on(roomId, function (data) {
+      console.log(data);
+
+      // Only happens when the server is emitting for changes.
+      _root.loadQueueFromMongo(false);
+    });
+
     return {queue : [], roomId:roomId};
   },
   componentWillReceiveProps: function(){
       console.log('will recieve props');
-      this.loadQueueFromMongo();
+
+      // Changing from room to room.
+      this.loadQueueFromMongo(true);
       this.loadRoomId();
   },
   componentDidMount: function(){
       console.log('componentdidmount');
-      this.loadQueueFromMongo();
+
+      // Happens the first time after rendering.
+      this.loadQueueFromMongo(true);
   },
   render: function() {
     console.log(this.state.roomId);

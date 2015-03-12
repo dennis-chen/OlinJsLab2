@@ -25,19 +25,7 @@ var app = express();
 
 // Connect socket.io
 app.http().io();
-var io = app.io;
-
-// app.io.broadcast('news', { hello: 'world'});
-
-// FIXME Remove for later. Only for learning purposes.
-io.on('connection', function (socket) {
-	console.log('Connected!!');
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
-
+io = app.io;
 
 // Middleware.
 app.set('views', __dirname + '/views');
@@ -54,6 +42,17 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
+
+// FIXME Remove for later. Only for learning purposes.
+io.on('connection', function (socket) {
+  console.log('Connected!!');
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+
+
+});
 
 // API Routing Table.
 
