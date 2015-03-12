@@ -66,6 +66,36 @@ exports.add_song = function(req, res) {
 	});
 };
 
+exports.reorder_queue = function(req, res){
+	Playlist.findOne({name: req.body.roomId})
+		.exec(function (err, playlist){
+			if (err) {
+                res.status(404).send("Couldn't save playlist!");
+            } else {
+                var reordered_songs = playlist.songs;
+                console.log(reordered_songs.length);
+                var moved_song = reordered_songs.splice(req.body.start_index_to_swap, 1)[0];
+                console.log('removed!');
+                console.log(reordered_songs);
+                console.log(reordered_songs.length);
+                reordered_songs.splice(req.body.stop_index_to_swap, 0, moved_song);
+                console.log('added!');
+                console.log(reordered_songs.length);
+                playlist.songs = reordered_songs;
+                console.log(playlist.songs);
+                playlist.save(function (err){
+                    if (err) {
+                        res.status(404).send("Couldn't save playlist!");
+                    } else {
+                        io.sockets.emit(req.body.roomId, {
+                            status: "changed"
+                        });
+                    }
+                })
+            }
+        });
+};
+
 exports.find_or_create_room = function(req, res) {
 	find_or_create_room(req, res);
 };

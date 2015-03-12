@@ -12,30 +12,46 @@ var SongQueue = React.createClass({
     }
   },
   getInitialState: function (){
-    return { song_index:0 , queue:this.props.queue};
+    console.log('get initial state!');
+    return { song_index:0 , queue:this.props.queue };
   },
   componentWillReceiveProps: function(props){
+    var songQueue = this;
     var songQueueState = this.state;
     songQueueState.queue = props.queue;
     this.setState(songQueueState);
-  },
-  componentDidMount: function (){
-      var this_component = this;
       $( ".sortable" ).sortable({
           start: function (event, ui) {
-              //console.log('start')
-              //this_component.ui.item.index());
+              songQueueState.start_drag_index = ui.item.index();
+              songQueue.setState(songQueueState);
           },
           stop: function (event, ui) {
-              //console.log('start')
-                      //self.sendUpdatedIndex(ui.item);
+              var start_drag_index = songQueueState.start_drag_index;
+              var stop_drag_index = ui.item.index();
+              songQueue.props.reorderQueue(start_drag_index,stop_drag_index);
+          }
+      });
+      $( ".sortable" ).disableSelection();
+  },
+  componentDidMount: function (){
+      var songQueue = this;
+      var songQueueState = this.state;
+      $( ".sortable" ).sortable({
+          start: function (event, ui) {
+              songQueueState.start_drag_index = ui.item.index();
+              songQueue.setState(songQueueState);
+          },
+          stop: function (event, ui) {
+              var start_drag_index = songQueueState.start_drag_index;
+              var stop_drag_index = ui.item.index();
+              songQueue.props.reorderQueue(start_drag_index,stop_drag_index);
           }
       });
       $( ".sortable" ).disableSelection();
   },
   render: function() {
     var queue = this.state.queue;
-    var song_titles = queue.map(function(track){ return <div>{track.title}</div> });
+    var song_titles = queue.map(function(track){ return <div className="song_title">{track.title}</div> });
     if (song_titles.length > 0) {
       song_titles[this.state.song_index] = <div className="songPlaying"> 
           <b>{song_titles[this.state.song_index]}</b>

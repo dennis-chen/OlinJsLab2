@@ -35,7 +35,28 @@ var Room = React.createClass({
       console.log("Failure!");
     });
   },
-
+  reorderQueue: function(start_index_to_swap,stop_index_to_swap){
+    // Temporarily stores the object so that it can be referenced later in a post request.
+    var _root = this;
+    var roomState = this.state;
+    // Find or create a new room.
+    $.ajax({
+      type: "POST",
+      url: "/reorder_queue",
+      data: {
+        roomId: this.state.roomId,
+        start_index_to_swap: start_index_to_swap,
+        stop_index_to_swap: stop_index_to_swap
+      },
+    })
+    .done(function(){
+        //presumably does nothing because event emitter should tell this one to update
+    })
+    .fail(function(){
+      // FIXME Change state.
+      console.log("Failure!");
+    });
+  },
   loadQueueFromMongo: function(hasChangeHappened){
     console.log('loadQueueFromMongo');
     var roomId = this.getParams()["roomId"];
@@ -111,7 +132,7 @@ var Room = React.createClass({
     return (
       <div>
         <h1>This room is currently {this.state.roomId}</h1>
-        <SongQueue queue={this.state.queue}/>
+        <SongQueue reorderQueue={this.reorderQueue} queue={this.state.queue}/>
         <Search addSongToQueue={this.addSongToQueue}/>    
       </div>
     );
