@@ -32,6 +32,7 @@ function find_or_create_room (req, res, modifyPlaylist) {
 						// FIXME Remove the hardcoded broadcast.
 						console.log("Has change happened? " + req.body.hasChangeHappened);
 						if (req.body.hasChangeHappened === "true") {
+                            console.log('find or create room');
 							io.sockets.emit(req.body.roomId, {
 								status: "changed"
 							});
@@ -69,6 +70,32 @@ exports.add_song = function(req, res) {
 		newUpsertData.songs.push(parsedSong);
 		playlistUpdate(chosenPlaylist, newUpsertData);
 	});
+};
+
+exports.reorder_queue = function(req, res){
+	Playlist.findOne({name: req.body.roomId})
+		.exec(function (err, playlist){
+			if (err) {
+                res.status(404).send("Couldn't save playlist!");
+            } else {
+                console.log('In reorder queue!');
+                var reordered_songs = playlist.songs;
+                var moved_song = reordered_songs.splice(req.body.start_index_to_swap, 1)[0];
+                reordered_songs.splice(req.body.stop_index_to_swap, 0, moved_song);
+                playlist.songs = reordered_songs;
+                playlist.save(function (err){
+                    if (err) {
+                        res.status(404).send("Couldn't save playlist!");
+                    } else {
+                        console.log('reorder queue');
+                        io.sockets.emit(req.body.roomId, {
+                            status: "changed"
+                        });
+                        res.status(200).send('success!');
+                    }
+                })
+            }
+        });
 };
 
 exports.find_or_create_room = function(req, res) {

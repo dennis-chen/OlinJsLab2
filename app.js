@@ -1,6 +1,5 @@
-// Utility Imports.
+// Utility Imports.  
 var express = require('express.io');
-
 var session = require('express-session');
 var mongoose = require('mongoose');
 var path = require('path');
@@ -104,5 +103,6 @@ app.get('/logout', function(req, res){
 // POST.
 app.post('/find_or_create_room', ensureAuthenticated, base.find_or_create_room);
 app.post('/add_song', ensureAuthenticated, base.add_song);
+app.post('/reorder_queue', ensureAuthenticated, base.reorder_queue);
 
 app.listen(PORT);
