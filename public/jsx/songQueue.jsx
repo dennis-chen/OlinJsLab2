@@ -29,6 +29,9 @@ var SongQueue = React.createClass({
               var start_drag_index = songQueueState.start_drag_index;
               var stop_drag_index = ui.item.index();
               songQueue.props.reorderQueue(start_drag_index,stop_drag_index);
+              //this line is to force react to re-render without attempting to use the prior state, which fucks things up.
+              songQueueState.queue = [];
+              songQueue.setState(songQueueState);
           }
       });
       $( ".sortable" ).disableSelection();
@@ -45,13 +48,16 @@ var SongQueue = React.createClass({
               var start_drag_index = songQueueState.start_drag_index;
               var stop_drag_index = ui.item.index();
               songQueue.props.reorderQueue(start_drag_index,stop_drag_index);
+              //this line is to force react to re-render without attempting to use the prior state, which fucks things up.
+              songQueueState.queue = [];
+              songQueue.setState(songQueueState);
           }
       });
       $( ".sortable" ).disableSelection();
   },
   render: function() {
     var queue = this.state.queue;
-    var song_titles = queue.map(function(track){ return <div className="song_title">{track.title}</div> });
+    var song_titles = queue.map(function(track){ return <div className="song_title" >{track.title}</div> });
     if (song_titles.length > 0) {
       song_titles[this.state.song_index] = <div className="songPlaying"> 
           <b>{song_titles[this.state.song_index]}</b>

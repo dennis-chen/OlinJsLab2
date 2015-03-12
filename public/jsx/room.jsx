@@ -50,7 +50,7 @@ var Room = React.createClass({
         stop_index_to_swap: stop_index_to_swap
       },
     })
-    .done(function(){
+    .done(function(data,status){
         //presumably does nothing because event emitter should tell this one to update
     })
     .fail(function(){
@@ -131,7 +131,6 @@ var Room = React.createClass({
       this.loadQueueFromMongo(true);
   },
   render: function() {
-    console.log(this.state.roomId);
     return (
       <div>
         <h1>This room is currently {this.state.roomId}</h1>

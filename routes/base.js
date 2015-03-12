@@ -91,7 +91,7 @@ exports.reorder_queue = function(req, res){
                         io.sockets.emit(req.body.roomId, {
                             status: "changed"
                         });
-                        res.status(200).send('Reordered queue!');
+                        res.status(200).send('success!');
                     }
                 })
             }
