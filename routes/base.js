@@ -53,6 +53,11 @@ function find_or_create_room (req, res, modifyPlaylist) {
 	});
 }
 
+// exports.load_home = function (req, res) {
+// 	console.log("Loading the home page.");
+// 	res.sendfile('views/index.html');
+// }
+
 exports.add_song = function(req, res) {
 
 	find_or_create_room(req, res, function (chosenPlaylist, upsertData, playlistUpdate){
