@@ -1,5 +1,5 @@
-// Utility Imports.
-var express = require('express');
+// Utility Imports.  
+var express = require('express.io');
 var session = require('express-session');
 var mongoose = require('mongoose');
 var path = require('path');
@@ -8,15 +8,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 React = require('react');
 
-// Socket.io
-// var io = require('socket.io').listen(express);
-
 // Route Imports.
 var base = require('./routes/base');
 
 // Environment Variables.
 var mongoURI = process.env.MONGOURI || "mongodb://localhost/test";
-//var mongoURI = "mongodb://localhost/test";
 var PORT = process.env.PORT || 3000;
 mongoose.connect(mongoURI);
 
@@ -25,6 +21,10 @@ Playlist = require('./models/playlist');
 
 // Config.
 var app = express();
+
+// Connect socket.io
+app.http().io();
+io = app.io;
 
 // Middleware.
 app.set('views', __dirname + '/views');

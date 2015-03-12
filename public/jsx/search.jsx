@@ -3,7 +3,7 @@
 // A singular search result.
 var SearchResult = React.createClass({
   handleClick: function() {
-    this.props.addSongToQueue(this.props.track);
+    this.props.addSongToQueue(this.props.track, hasChangeHappened=true);
   },
   render: function() {
     var thumbnail_url = 'http://img.youtube.com/vi/'+ this.props.track.id +'/mqdefault.jpg'
