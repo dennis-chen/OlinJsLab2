@@ -96,7 +96,10 @@ function ensureAuthenticated(req, res, next) {
   }
 }
 
-// app.get("/", ensureAuthenticated, base.load_home);
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
 
 // POST.
 app.post('/find_or_create_room', ensureAuthenticated, base.find_or_create_room);
