@@ -85,6 +85,17 @@ var Room = React.createClass({
   componentWillReceiveProps: function(){
       console.log('will recieve props');
 
+      var _root = this;
+      var roomId = this.getParams()["roomId"];
+
+      // FIXME Make this less redundant.
+      socket.on(roomId, function (data) {
+        console.log(data);
+
+        // Only happens when the server is emitting for changes.
+        _root.loadQueueFromMongo(false);
+      });
+
       // Changing from room to room.
       this.loadQueueFromMongo(true);
       this.loadRoomId();
