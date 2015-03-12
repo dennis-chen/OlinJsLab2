@@ -43,17 +43,6 @@ app.use(session({
     saveUninitialized: true
 }));
 
-// FIXME Remove for later. Only for learning purposes.
-io.on('connection', function (socket) {
-  console.log('Connected!!');
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-
-
-});
-
 // API Routing Table.
 
 // GET.
