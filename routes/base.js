@@ -32,6 +32,7 @@ function find_or_create_room (req, res, modifyPlaylist) {
 						// FIXME Remove the hardcoded broadcast.
 						console.log("Has change happened? " + req.body.hasChangeHappened);
 						if (req.body.hasChangeHappened === "true") {
+                            console.log('find or create room');
 							io.sockets.emit(req.body.roomId, {
 								status: "changed"
 							});
@@ -53,6 +54,11 @@ function find_or_create_room (req, res, modifyPlaylist) {
 	});
 }
 
+// exports.load_home = function (req, res) {
+// 	console.log("Loading the home page.");
+// 	res.sendfile('views/index.html');
+// }
+
 exports.add_song = function(req, res) {
 
 	find_or_create_room(req, res, function (chosenPlaylist, upsertData, playlistUpdate){
@@ -72,24 +78,20 @@ exports.reorder_queue = function(req, res){
 			if (err) {
                 res.status(404).send("Couldn't save playlist!");
             } else {
+                console.log('In reorder queue!');
                 var reordered_songs = playlist.songs;
-                console.log(reordered_songs.length);
                 var moved_song = reordered_songs.splice(req.body.start_index_to_swap, 1)[0];
-                console.log('removed!');
-                console.log(reordered_songs);
-                console.log(reordered_songs.length);
                 reordered_songs.splice(req.body.stop_index_to_swap, 0, moved_song);
-                console.log('added!');
-                console.log(reordered_songs.length);
                 playlist.songs = reordered_songs;
-                console.log(playlist.songs);
                 playlist.save(function (err){
                     if (err) {
                         res.status(404).send("Couldn't save playlist!");
                     } else {
+                        console.log('reorder queue');
                         io.sockets.emit(req.body.roomId, {
                             status: "changed"
                         });
+                        res.status(200).send('Reordered queue!');
                     }
                 })
             }

@@ -36,6 +36,7 @@ var Room = React.createClass({
     });
   },
   reorderQueue: function(start_index_to_swap,stop_index_to_swap){
+      console.log('queue reordered!');
     // Temporarily stores the object so that it can be referenced later in a post request.
     var _root = this;
     var roomState = this.state;
@@ -95,6 +96,7 @@ var Room = React.createClass({
     var roomId = this.getParams()["roomId"];
 
     socket.on(roomId, function (data) {
+        console.log('got socket data!');
       console.log(data);
 
       // Only happens when the server is emitting for changes.
@@ -111,8 +113,9 @@ var Room = React.createClass({
 
       // FIXME Make this less redundant.
       socket.on(roomId, function (data) {
+        console.log('got socket data!');
         console.log(data);
-
+        console.log(roomId);
         // Only happens when the server is emitting for changes.
         _root.loadQueueFromMongo(false);
       });

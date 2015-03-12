@@ -22,8 +22,10 @@ var App = React.createClass({
 var routes = (
   <Route name="app" path="/" handler={App}>
     <Route name="room" path="room/:roomId" handler={Room}/>
-    <NotFoundRoute handler={Room}/>
-    <DefaultRoute handler={Room}/>
+    <Route name="home" path="home" handler={Home}/>
+    <Route name="login" handler={Login}/>
+    <NotFoundRoute handler={Login}/>
+    <DefaultRoute handler={Login}/>
   </Route>
 );
 
