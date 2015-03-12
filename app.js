@@ -15,8 +15,8 @@ React = require('react');
 var base = require('./routes/base');
 
 // Environment Variables.
-//var mongoURI = process.env.MONGOURI || "mongodb://localhost/test";
-var mongoURI = "mongodb://localhost/test";
+var mongoURI = process.env.MONGOURI || "mongodb://localhost/test";
+//var mongoURI = "mongodb://localhost/test";
 var PORT = process.env.PORT || 3000;
 mongoose.connect(mongoURI);
 
