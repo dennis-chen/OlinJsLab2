@@ -28,6 +28,15 @@ function find_or_create_room (req, res, modifyPlaylist) {
 					function (err, result){
 						if (err) throw err;
 
+						// Broadcast to all clients of this room that the playlist has changed.
+						// FIXME Remove the hardcoded broadcast.
+						console.log("Has change happened? " + req.body.hasChangeHappened);
+						if (req.body.hasChangeHappened === "true") {
+							io.sockets.emit(req.body.roomId, {
+								status: "changed"
+							});
+						}
+
 						// FIXME Make this less bulky by sending back much less information.
 						// Return all songs in the playlist.
 						res.status(200).json({

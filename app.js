@@ -1,5 +1,6 @@
 // Utility Imports.
-var express = require('express');
+var express = require('express.io');
+
 var session = require('express-session');
 var mongoose = require('mongoose');
 var path = require('path');
@@ -7,9 +8,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 React = require('react');
-
-// Socket.io
-// var io = require('socket.io').listen(express);
 
 // Route Imports.
 var base = require('./routes/base');
@@ -24,6 +22,10 @@ Playlist = require('./models/playlist');
 
 // Config.
 var app = express();
+
+// Connect socket.io
+app.http().io();
+io = app.io;
 
 // Middleware.
 app.set('views', __dirname + '/views');
