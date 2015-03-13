@@ -11,14 +11,50 @@ var NotFoundRoute = Router.NotFoundRoute;
 var LoginBox = React.createClass({
   getInitialState: function (){
     console.log('LoginBox getinitialstate');
+
     return {
-      login: <a href="/auth/facebook"><div>Login with Facebook</div></a>
+      login: "",
+      isLoggedIn: false
     };
   },
+  componentWillMount: function (){
+    console.log("LoginBox componentWillMount");
+    this.recieveLoginInfo();
+  },
+  recieveLoginInfo: function (){
+    console.log("LoginBox recieveLoginInfo");
+
+    var _root = this;
+    var LoginBoxState = this.state;
+
+    $.ajax({
+      type: "GET",
+      url: "/user_info"
+    })
+    .done(function(name){
+        LoginBoxState.login = name;
+        LoginBoxState.isLoggedIn = true;
+        _root.setState(LoginBoxState);
+    })
+    .fail(function(){
+      // TODO Catch any errors.
+    });
+  },
   render: function (){
-    return (
-      <div id="loginStatus">{this.state.login}</div>
-    );
+    if (this.state.isLoggedIn) {
+      return (
+        <div id="loginStatus">
+          <span>Welcome, {this.state.login}! | </span>
+          <b><a href="/logout">Logout</a></b>
+        </div>
+      );
+    } else {
+      return (
+        <div id="loginStatus">
+          <b><a href="/auth/facebook">Login with Facebook.</a></b>
+        </div>
+      );
+    }
   }
 });
 
@@ -37,10 +73,8 @@ var App = React.createClass({
 var routes = (
   <Route name="app" path="/" handler={App}>
     <Route name="room" path="room/:roomId" handler={Room}/>
-    <Route name="home" path="home" handler={Home}/>
-    <Route name="login" handler={Login}/>
-    <NotFoundRoute handler={Login}/>
-    <DefaultRoute handler={Login}/>
+    <NotFoundRoute handler={Home}/>
+    <DefaultRoute handler={Home}/>
   </Route>
 );
 

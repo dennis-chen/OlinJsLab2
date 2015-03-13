@@ -133,3 +133,13 @@ exports.reorder_queue = function(req, res){
 exports.find_or_create_room = function(req, res) {
 	find_or_create_room(req, res);
 };
+
+exports.user_info = function (req, res) {
+    // FIXME There's probably a way better way of doing this. I can't think clearly right now.
+    // Send back the username of the person logged in.
+    if (req.user) {
+        res.send(req.user.name.givenName + " " + req.user.name.familyName);
+    } else {
+        res.status(404);
+    }
+}
