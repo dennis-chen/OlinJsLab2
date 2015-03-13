@@ -3,7 +3,8 @@
 
 var Router = ReactRouter;
 
-var socket = io.connect('http://localhost');
+// var socket = io.connect('http://localhost');
+var socket = io.connect('http://youtrello.herokuapp.com');
 
 var Room = React.createClass({
   // FIXME Figure out why this is important - because without it my code breaks.
