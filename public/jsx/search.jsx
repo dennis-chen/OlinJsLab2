@@ -4,6 +4,7 @@
 var SearchResult = React.createClass({
   handleClick: function() {
     this.props.addSongToQueue(this.props.track, hasChangeHappened=true);
+    this.refs.SearchBar.getDOMNode().value('');
   },
   render: function() {
     var thumbnail_url = 'http://img.youtube.com/vi/'+ this.props.track.id +'/mqdefault.jpg'
