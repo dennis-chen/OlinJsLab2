@@ -30,6 +30,13 @@ body {
   margin-left: -160px;
 }
 
+#loginStatus {
+  text-align: center;
+  padding: 10px;
+  background-color: #222326;
+  overflow: hidden;
+}
+
 #roomTitle {
   text-align: center;
   margin: 50px;
@@ -164,4 +171,3 @@ body {
     position:relative;
     top:1px;
 }
-
