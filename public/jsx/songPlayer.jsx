@@ -1,3 +1,8 @@
+//this function is nessecary for the youtube api to hook into react.
+function onYouTubePlayerAPIReady() {
+
+}
+
 var SongPlayer = React.createClass({
     play: function(){
         console.log('play');
@@ -14,7 +19,12 @@ var SongPlayer = React.createClass({
         this.props.changeSongIndex(-1);
     },
     getInitialState: function(){
-        return {error_message:''};
+        return {error_message:'', player:null};
+    },
+    componentWillRecieveProps: function(){
+    
+    },
+    componentDidMount: function(){
     },
     render: function() {
         var songPlayerComponent = this;
