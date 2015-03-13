@@ -1,3 +1,6 @@
+// Home Component.
+// Contains the input box for going to another room.
+
 var Home = React.createClass({
   goToRoom: function() {
     var room_id = this.refs.search_bar.getDOMNode().value.trim();

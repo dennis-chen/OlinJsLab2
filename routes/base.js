@@ -1,3 +1,7 @@
+// base.js
+// Handles a majority of the app routes.
+// TODO Diversify the routes so they are better packaged.
+
 function find_or_create_room (req, res, modifyPlaylist) {
 	
 	var chosenPlaylist;

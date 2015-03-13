@@ -1,4 +1,5 @@
 // Search Component.
+// Contains search bar and elements. 
 
 // A singular search result.
 var SearchResult = React.createClass({

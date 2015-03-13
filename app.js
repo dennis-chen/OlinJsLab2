@@ -1,3 +1,8 @@
+// YouTrello.
+// App that combines Youtube and Trello.
+// Uses Facebook authentication.
+// Group create and play music together at the same time for a good time :D
+
 // Utility Imports.  
 var express = require('express.io');
 var session = require('express-session');
@@ -58,6 +63,8 @@ passport.use(new FacebookStrategy({
   }
 ));
 
+var favicon = require('serve-favicon');
+
 // Middleware.
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jsx');
@@ -67,6 +74,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(session({
     secret: 'secret',

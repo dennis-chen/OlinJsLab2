@@ -1,10 +1,11 @@
+// SongPlayer component.
+// Handles music playing and video rendering.
+
 var SongPlayer = React.createClass({
     play: function(){
-        console.log('play');
         //TODO: get buttons to play/pause the current youtube video.
     },
     stop: function(){
-        console.log('stop');
         //TODO: get buttons to play/pause the current youtube video.
     },
     next: function(){

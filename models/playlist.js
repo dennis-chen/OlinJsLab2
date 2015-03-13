@@ -1,4 +1,4 @@
-// Mongo Model for a Song.
+// Mongo Model for a Playlist.
 // Keeps track of what songs have been added.
 
 var mongoose = require('mongoose');
