@@ -27,7 +27,8 @@ var SongQueue = React.createClass({
               //this line is to force react to re-render without attempting to use the prior state, which fucks things up.
               songQueueState.queue = [];
               songQueue.setState(songQueueState);
-          }
+          },
+          axis: 'y'
       });
       $( ".sortable" ).disableSelection();
   },
@@ -46,7 +47,8 @@ var SongQueue = React.createClass({
               //this line is to force react to re-render without attempting to use the prior state, which fucks things up.
               songQueueState.queue = [];
               songQueue.setState(songQueueState);
-          }
+          },
+          axis: 'y'
       });
       $( ".sortable" ).disableSelection();
   },
