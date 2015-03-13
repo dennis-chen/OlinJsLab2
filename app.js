@@ -1,3 +1,8 @@
+// YouTrello.
+// App that combines Youtube and Trello.
+// Uses Facebook authentication.
+// Group create and play music together at the same time for a good time :D
+
 // Utility Imports.  
 var express = require('express.io');
 var session = require('express-session');

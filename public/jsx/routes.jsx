@@ -1,4 +1,6 @@
+// Appcomponent.
 // Contains the app and all of my routes for rooms.
+// Includes the LoginBox that displays in all rooms.
 
 // Set up routing references for later. 
 var Router = ReactRouter;
@@ -10,19 +12,15 @@ var NotFoundRoute = Router.NotFoundRoute;
 
 var LoginBox = React.createClass({
   getInitialState: function (){
-    console.log('LoginBox getinitialstate');
-
     return {
       login: "",
       isLoggedIn: false
     };
   },
   componentWillMount: function (){
-    console.log("LoginBox componentWillMount");
     this.recieveLoginInfo();
   },
   recieveLoginInfo: function (){
-    console.log("LoginBox recieveLoginInfo");
 
     var _root = this;
     var LoginBoxState = this.state;

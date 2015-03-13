@@ -1,3 +1,6 @@
+// SongQueue component.
+// Contains the queue of songs loaded from the database.
+
 var Router = ReactRouter;
 
 var SongQueue = React.createClass({
@@ -6,7 +9,6 @@ var SongQueue = React.createClass({
       this.props.changeSongIndex(change_index);
   },
   getInitialState: function (){
-    console.log('get initial state!');
     return { queue:this.props.queue };
   },
   componentWillReceiveProps: function(props){
