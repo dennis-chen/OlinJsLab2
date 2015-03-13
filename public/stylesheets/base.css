@@ -1,0 +1,19 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800);
+
+* {
+  color: #dfe0e6;
+  font-family: 'Open Sans';
+}
+
+/*
+Shaded color is #797a7e
+*/
+
+body {
+  background-color: #121314;
+}
+
+.playerButtons {
+  font-size: 24pt;
+  margin: 10px;
+}
