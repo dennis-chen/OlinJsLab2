@@ -6,7 +6,8 @@ var mongoose = require('mongoose');
 var PlaylistSchema = mongoose.Schema({
 	name: String,
 	authorId: String,
-	songs: []
+	songs: [],
+    song_index: Number
 });
 
 module.exports = mongoose.model("Playlist", PlaylistSchema);
