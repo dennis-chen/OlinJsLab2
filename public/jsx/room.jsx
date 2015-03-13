@@ -22,7 +22,7 @@ var Room = React.createClass({
       },
     })
     .done(function(){
-        //don't update here, let websockets emitting an event should trigger loading of new song index
+      //don't update here, let websockets emitting an event should trigger loading of new song index
     })
     .fail(function(){
       console.log("Failure!");
