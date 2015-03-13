@@ -129,7 +129,6 @@ var Room = React.createClass({
       queue : [], 
       roomId:roomId, 
       song_index:0,
-      login: <a href="/auth/facebook"><div>Login with Facebook</div></a>
     };
   },
   componentWillReceiveProps: function(){
@@ -160,7 +159,6 @@ var Room = React.createClass({
   render: function() {
     return (
       <div>
-        <div id="loginStatus">{this.state.login}</div>
         <h1 id="roomTitle">{this.state.roomId}</h1>
         <Search addSongToQueue={this.addSongToQueue}/>    
         <SongQueue changeSongIndex={this.changeSongIndex} reorderQueue={this.reorderQueue} queue={this.state.queue} song_index={this.state.song_index}/>
