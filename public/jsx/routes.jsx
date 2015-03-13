@@ -8,11 +8,26 @@ var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 var NotFoundRoute = Router.NotFoundRoute;
 
+var LoginBox = React.createClass({
+  getInitialState: function (){
+    console.log('LoginBox getinitialstate');
+    return {
+      login: <a href="/auth/facebook"><div>Login with Facebook</div></a>
+    };
+  },
+  render: function (){
+    return (
+      <div id="loginStatus">{this.state.login}</div>
+    );
+  }
+});
+
 // Load the RouteHandler.
 var App = React.createClass({
   render: function () {
     return (
       <div>
+        <LoginBox/>
         <RouteHandler/>
       </div>
     );
