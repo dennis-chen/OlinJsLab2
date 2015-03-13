@@ -9,6 +9,19 @@
 Shaded color is #797a7e
 */
 
+.clearfix:before, .clearfix:after {
+  content: "";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
 body {
   background-color: #121314;
   position: absolute;
@@ -41,6 +54,8 @@ body {
   width: 320px;
   text-align: center;
   margin-bottom: 20px;
+  background-color: #222326;
+  border: 0px; 
 }
 
 .search_results {
@@ -53,14 +68,36 @@ body {
 
 .search_result {
   position: relative;
-  background-color: #121314;
-  border: 1px solid red;
+  background-color: #222326;
+  padding: 10px;
+}
+
+.search_result:hover {
+  background-color: #797a7e;
+  cursor: pointer;
+}
+
+.videoThumbnail {
+  width: 100px;
+  float: left;
+}
+
+.trackName {
+  float: right;
+  width: 195px;
+  overflow: hidden;
+  padding: 5px;
 }
 
 .song_title {
   padding: 5px;
   margin-bottom: 10px;
   background-color: #222326;
+}
+
+.song_title:hover {
+  background-color: #797a7e;
+  cursor: pointer;
 }
 
 .draggedSong {
