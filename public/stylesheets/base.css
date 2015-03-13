@@ -1,0 +1,105 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800);
+
+* {
+  color: #dfe0e6;
+  font-family: 'Open Sans';
+}
+
+/*
+Shaded color is #797a7e
+*/
+
+.clearfix:before, .clearfix:after {
+  content: "";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
+body {
+  background-color: #121314;
+  position: absolute;
+  left: 50%;
+  width: 320px;
+  margin-left: -160px;
+}
+
+#roomTitle {
+  text-align: center;
+  margin: 50px;
+}
+
+.playerButtons {
+  text-align: center;
+}
+
+.playerButton {
+  font-size: 24pt;
+  margin: 10px;
+  color: #797a7e;
+}
+
+.playerButton:hover {
+  color: #dfe0e6;
+  cursor: pointer;
+}
+
+.search_bar {
+  width: 320px;
+  text-align: center;
+  margin-bottom: 20px;
+  background-color: #222326;
+  border: 0px; 
+}
+
+.search_results {
+  position: absolute;
+  z-index: 1000;
+  left: 50%;
+  width: 320px;
+  margin-left: -160px;
+}
+
+.search_result {
+  position: relative;
+  background-color: #222326;
+  padding: 10px;
+}
+
+.search_result:hover {
+  background-color: #797a7e;
+  cursor: pointer;
+}
+
+.videoThumbnail {
+  width: 100px;
+  float: left;
+}
+
+.trackName {
+  float: right;
+  width: 195px;
+  overflow: hidden;
+  padding: 5px;
+}
+
+.song_title {
+  padding: 5px;
+  margin-bottom: 10px;
+  background-color: #222326;
+}
+
+.song_title:hover {
+  background-color: #797a7e;
+  cursor: pointer;
+}
+
+.draggedSong {
+  margin-left: -240px;
+}

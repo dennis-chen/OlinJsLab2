@@ -45,10 +45,13 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://localhost:3000/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log("StrellofyUser: ");
-    console.log(StrellofyUser);
 
-    StrellofyUser.findOrCreate({}, function(err, user) {
+    // FIXME Don't hardcode this. Define in the Schema.
+    StrellofyUser.findOrCreate({
+      profile_id: profile.id,
+    }, {
+      name: profile.name,
+    }, function(err, user) {
       if (err) { return done(err); } 
       done(null, user);
     });

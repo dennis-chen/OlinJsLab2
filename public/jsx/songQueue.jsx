@@ -18,6 +18,7 @@ var SongQueue = React.createClass({
           start: function (event, ui) {
               songQueueState.start_drag_index = ui.item.index();
               songQueue.setState(songQueueState);
+              $(ui.helper).addClass("draggedSong");
           },
           stop: function (event, ui) {
               var start_drag_index = songQueueState.start_drag_index;
@@ -62,7 +63,7 @@ var SongQueue = React.createClass({
       <div className="SongQueue">
           <SongPlayer changeSongIndex={this.props.changeSongIndex} song={song}/>
           <div className="sortable">
-              {song_titles}
+            {song_titles}
           </div>
       </div>
     );

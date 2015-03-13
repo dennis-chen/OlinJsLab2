@@ -10,9 +10,9 @@ var SearchResult = React.createClass({
   render: function() {
     var thumbnail_url = 'http://img.youtube.com/vi/'+ this.props.track.id +'/mqdefault.jpg'
     return (
-      <div className="search_result" onClick={this.handleClick} >
-        <div className="trackName">{this.props.track.title}</div>
+      <div className="search_result clearfix" onClick={this.handleClick} >
         <div><img className="videoThumbnail" src={thumbnail_url}></img></div>
+        <div className="trackName">{this.props.track.title}</div>
       </div>
     );
   }
@@ -80,8 +80,9 @@ var Search = React.createClass({
   render: function() {
     return (
       <div>
-        <input className="search_bar" onChange={this.handleChange} type="text" ref="SearchBar"></input>
-        <div className="message">{this.state.message}</div>
+
+        <input className="search_bar" onChange={this.handleChange} type="text" ref="SearchBar" placeholder="Which song do you want to hear?"></input>
+
         <SearchResults clearSearchBar={this.clearSearchBar} addSongToQueue={this.props.addSongToQueue} searchResults={this.state.search_results} ref="searchResults"/>
       </div>
     );
