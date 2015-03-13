@@ -47,7 +47,7 @@ var StrellofyUser = require("./models/strellofyUser");
 passport.use(new FacebookStrategy({
     clientID: process.env.STRELLOFY_APP_ID,
     clientSecret: process.env.STRELLOFY_APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback"
+    callbackURL: "http://youtrello.herokuapp.com/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
 
