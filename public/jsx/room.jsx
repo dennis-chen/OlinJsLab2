@@ -155,9 +155,9 @@ var Room = React.createClass({
   render: function() {
     return (
       <div>
-        <h1>This room is currently {this.state.roomId}</h1>
-        <SongQueue changeSongIndex={this.changeSongIndex} reorderQueue={this.reorderQueue} queue={this.state.queue} song_index={this.state.song_index}/>
+        <h1 id="roomTitle">{this.state.roomId}</h1>
         <Search addSongToQueue={this.addSongToQueue}/>    
+        <SongQueue changeSongIndex={this.changeSongIndex} reorderQueue={this.reorderQueue} queue={this.state.queue} song_index={this.state.song_index}/>
       </div>
     );
   }

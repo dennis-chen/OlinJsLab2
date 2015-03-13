@@ -25,12 +25,12 @@ var SongPlayer = React.createClass({
             var embed_video = <div className="embed_video"> </div>
         }
         return (
-            <div>
+            <div className="playerButtons">
                 {embed_video}
-                <div onClick={songPlayerComponent.previous} className="fa fa-fast-backward playerButtons"></div>
-                <div onClick={songPlayerComponent.play} className="fa fa-play playerButtons"></div>
-                <div onClick={songPlayerComponent.stop} className="fa fa-pause playerButtons"></div>
-                <div onClick={songPlayerComponent.next} className="fa fa-fast-forward playerButtons"></div>
+                <div onClick={songPlayerComponent.previous} className="fa fa-fast-backward playerButton"></div>
+                <div onClick={songPlayerComponent.play} className="fa fa-play playerButton"></div>
+                <div onClick={songPlayerComponent.stop} className="fa fa-pause playerButton"></div>
+                <div onClick={songPlayerComponent.next} className="fa fa-fast-forward playerButton"></div>
 
                 <div className="error_message"> {this.state.error_message} </div>
             </div>

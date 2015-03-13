@@ -11,15 +11,47 @@ Shaded color is #797a7e
 
 body {
   background-color: #121314;
+  position: absolute;
+  left: 50%;
+  width: 320px;
+  margin-left: -160px;
+}
+
+#roomTitle {
+  text-align: center;
+  margin: 50px;
 }
 
 .playerButtons {
+  text-align: center;
+}
+
+.playerButton {
   font-size: 24pt;
   margin: 10px;
   color: #797a7e;
 }
 
-.playerButtons:hover {
+.playerButton:hover {
   color: #dfe0e6;
   cursor: pointer;
+}
+
+.search_bar {
+  width: 320px;
+  text-align: center;
+}
+
+.search_results {
+  position: absolute;
+  z-index: 1000;
+  left: 50%;
+  width: 320px;
+  margin-left: -160px;
+}
+
+.search_result {
+  position: relative;
+  background-color: #121314;
+  border: 1px solid red;
 }

@@ -75,8 +75,11 @@ var Search = React.createClass({
   render: function() {
     return (
       <div>
-        <input className="search_bar" onChange={this.handleChange} type="text" ref="SearchBar"></input>
-        <div className="message">{this.state.message}</div>
+        <input className="search_bar" onChange={this.handleChange} type="text" ref="SearchBar" placeholder="Which song do you want to hear?"></input>
+        {/*
+          // FIXME Integrate into search results in the future. 
+          <div className="message">{this.state.message}</div>
+        */}
         <SearchResults addSongToQueue={this.props.addSongToQueue} searchResults={this.state.search_results} ref="searchResults"/>
       </div>
     );

@@ -46,6 +46,7 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
 
+    // FIXME Don't hardcode this. Define in the Schema.
     StrellofyUser.findOrCreate({
       profile_id: profile.id,
     }, {
