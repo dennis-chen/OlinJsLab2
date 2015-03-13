@@ -46,6 +46,7 @@ var Search = React.createClass({
   },
   clearSearchBar: function(){
     $('.search_bar').val('');
+    this.setState({search_results: []});
   },
   searchYoutube: function(query){
     var searchComponent = this;

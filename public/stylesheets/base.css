@@ -113,10 +113,6 @@ body {
   cursor: pointer;
 }
 
-.draggedSong {
-  margin-left: -240px;
-}
-
 .enter_room_box {
   border-radius: 5px;
   padding: 15px;
