@@ -16,4 +16,10 @@ body {
 .playerButtons {
   font-size: 24pt;
   margin: 10px;
+  color: #797a7e;
+}
+
+.playerButtons:hover {
+  color: #dfe0e6;
+  cursor: pointer;
 }
