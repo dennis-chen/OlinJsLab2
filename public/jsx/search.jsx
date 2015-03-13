@@ -4,7 +4,8 @@
 var SearchResult = React.createClass({
   handleClick: function() {
     this.props.addSongToQueue(this.props.track, hasChangeHappened=true);
-    this.refs.SearchBar.getDOMNode().value('');
+    //clearSearchBar is passed here from SearchResults, which gets it from Search. 
+    this.props.clearSearchBar();
   },
   render: function() {
     var thumbnail_url = 'http://img.youtube.com/vi/'+ this.props.track.id +'/mqdefault.jpg'
@@ -23,7 +24,7 @@ var SearchResults = React.createClass({
     var searchResultsComponent = this;
     var results = this.props.searchResults.map( function (result) {
       return (
-        <SearchResult track={result} addSongToQueue={searchResultsComponent.props.addSongToQueue} />
+        <SearchResult track={result} addSongToQueue={searchResultsComponent.props.addSongToQueue} clearSearchBar={searchResultsComponent.props.clearSearchBar}/>
       );
     });
     return (
@@ -42,6 +43,9 @@ var Search = React.createClass({
     } else {
       this.setState({search_results: []});
     }
+  },
+  clearSearchBar: function(){
+    $('.search_bar').val('');
   },
   searchYoutube: function(query){
     var searchComponent = this;
@@ -76,12 +80,10 @@ var Search = React.createClass({
   render: function() {
     return (
       <div>
+
         <input className="search_bar" onChange={this.handleChange} type="text" ref="SearchBar" placeholder="Which song do you want to hear?"></input>
-        {/*
-          // FIXME Integrate into search results in the future. 
-          <div className="message">{this.state.message}</div>
-        */}
-        <SearchResults addSongToQueue={this.props.addSongToQueue} searchResults={this.state.search_results} ref="searchResults"/>
+
+        <SearchResults clearSearchBar={this.clearSearchBar} addSongToQueue={this.props.addSongToQueue} searchResults={this.state.search_results} ref="searchResults"/>
       </div>
     );
   }
