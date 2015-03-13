@@ -104,5 +104,6 @@ app.get('/logout', function(req, res){
 app.post('/find_or_create_room', base.find_or_create_room);
 app.post('/add_song', base.add_song);
 app.post('/reorder_queue', base.reorder_queue);
+app.post('/change_index', base.change_index);
 
 app.listen(PORT);

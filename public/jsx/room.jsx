@@ -9,6 +9,26 @@ var Room = React.createClass({
   // FIXME Figure out why this is important - because without it my code breaks.
   mixins: [Router.State],
 
+  changeSongIndex: function(change_index){
+      //change_index is the amount to increment or decrease current index by.
+    var _root = this;
+    var roomState = this.state;
+    $.ajax({
+      type: "POST",
+      url: "/change_index",
+      data: {
+        roomId: this.state.roomId,
+        change_index: change_index
+      },
+    })
+    .done(function(){
+        //don't update here, let websockets emitting an event should trigger loading of new song index
+    })
+    .fail(function(){
+      console.log("Failure!");
+    });
+  
+  },
   addSongToQueue: function(song, hasChangeHappened){
     // Temporarily stores the object so that it can be referenced later in a post request.
     var _root = this;
@@ -73,8 +93,11 @@ var Room = React.createClass({
       },
     })
     .done(function(songs){
+      console.log(songs);
       roomState.queue = songs["songs"]; // songs contains a list of songs.
+      roomState.song_index = songs["song_index"]; 
       this_component.setState(roomState);
+      console.log(this_component.state);
     })
     .fail(function(){
       roomState.queue = [];
@@ -82,7 +105,6 @@ var Room = React.createClass({
       this_component.setState(roomState);
     });
   },
-
   loadRoomId: function(){
       var roomId = this.getParams()["roomId"];
       var roomState = this.state;
@@ -103,7 +125,7 @@ var Room = React.createClass({
       _root.loadQueueFromMongo(false);
     });
 
-    return {queue : [], roomId:roomId};
+    return {queue : [], roomId:roomId, song_index:0};
   },
   componentWillReceiveProps: function(){
       console.log('will recieve props');
@@ -134,7 +156,7 @@ var Room = React.createClass({
     return (
       <div>
         <h1>This room is currently {this.state.roomId}</h1>
-        <SongQueue reorderQueue={this.reorderQueue} queue={this.state.queue}/>
+        <SongQueue changeSongIndex={this.changeSongIndex} reorderQueue={this.reorderQueue} queue={this.state.queue} song_index={this.state.song_index}/>
         <Search addSongToQueue={this.addSongToQueue}/>    
       </div>
     );

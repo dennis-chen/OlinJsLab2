@@ -5,12 +5,14 @@ function find_or_create_room (req, res, modifyPlaylist) {
 		.exec(function (err, playlist){
 			if (err) throw err;
 			
-			// Use existing playlist or make a new one.	
 			if (playlist.length != 0) {
+                //use existing playlist
 				chosenPlaylist = new Playlist(playlist[0]);
 			} else {
+              //use old playlist
 			  chosenPlaylist = new Playlist({
-					name: req.body.roomId
+					name: req.body.roomId,
+                    song_index: 0
 				});	
 			}
 
@@ -41,7 +43,8 @@ function find_or_create_room (req, res, modifyPlaylist) {
 						// FIXME Make this less bulky by sending back much less information.
 						// Return all songs in the playlist.
 						res.status(200).json({
-							songs: newUpsertData.songs
+							songs: newUpsertData.songs,
+                            song_index: newUpsertData.song_index
 						});
 				});
 			}
@@ -54,10 +57,39 @@ function find_or_create_room (req, res, modifyPlaylist) {
 	});
 }
 
-// exports.load_home = function (req, res) {
-// 	console.log("Loading the home page.");
-// 	res.sendfile('views/index.html');
-// }
+exports.change_index = function(req, res) {
+	Playlist.findOne({name: req.body.roomId})
+		.exec(function (err, playlist){
+            if (err) {
+                res.status(404).send("could not find playlist in database!");
+            } else {
+                console.log(playlist);
+                var change_index = req.body.change_index;
+                var current_index = playlist.song_index;
+                var new_index = parseInt(current_index) + parseInt(change_index);
+                console.log(new_index);
+                if (typeof playlist.songs[new_index] === 'undefined'){
+                    //then new_index is not a valid index. Don't actually change the index.
+                    console.log('wrong index');
+                    res.status(404).send('Invalid index!');
+                } else {
+                    playlist.song_index = new_index;
+                    playlist.save(function (err){
+                        if (err) {
+                            console.log("couldn't save");
+                            res.status(404).send("Couldn't save playlist!");
+                        } else {
+                            console.log('index changed');
+                            io.sockets.emit(req.body.roomId, {
+                                status: "changed"
+                            });
+                            res.status(200).send('success!');
+                        }
+                    });
+                }
+            }
+        });
+};
 
 exports.add_song = function(req, res) {
 
